@@ -1,97 +1,265 @@
-# 🤖 Local LLM Chatbot
+# 🤖 Secure Enterprise Local-LLM Portal
 
-A powerful, privacy-first AI chatbot that runs completely on your local machine using open-source Large Language Models (LLMs). This project provides a simple, interactive chat interface leveraging Ollama and Streamlit, ensuring complete data privacy, low latency, and offline accessibility. 
+A fully offline, enterprise-grade Retrieval-Augmented Generation (RAG) chatbot built using **Ollama**, **ChromaDB**, **Streamlit**, and **LangChain**. The application enables users to upload enterprise PDF documents, index them locally, and ask intelligent questions without sending any data to external APIs.
 
-## 🚀 Features
+> 🔒 100% Local • 📄 PDF RAG • 🧠 Local LLMs • ⚡ ChromaDB • 🚀 Streamlit
 
-* **💬 Interactive Web Interface:** Built with Streamlit for a clean, user-friendly experience.
-* **🧠 Local Execution:** Runs models completely locally using Ollama-supported models.
-* **🔒 100% Privacy:** No cloud APIs required. Your data never leaves your machine.
-* **⚡ Fast Generation:** Low latency responses directly from your hardware.
-* **📜 Conversation Memory:** Maintains context across the chat session for natural interactions.
-* **📚 RAG Support:** Includes Retrieval-Augmented Generation (RAG) capabilities to anchor responses in local data.
-* **🎯 Multi-Model Support:** Easily switch between popular open-source LLMs like Llama 3, Mistral, Gemma, and more.
+---
+
+## ✨ Features
+
+- 🖥️ Fully offline AI assistant powered by Ollama
+- 📄 Upload and chat with enterprise PDF documents
+- 🧠 Retrieval-Augmented Generation (RAG)
+- 🔍 Semantic search using local embeddings
+- 💾 ChromaDB vector database
+- 🔄 Supports multiple local LLMs (Llama 3 & Mistral)
+- 📚 Automatic document chunking and indexing
+- 🔒 Privacy-first architecture (no cloud APIs)
+- 🧹 Clear chat history
+- 🗑️ Purge vector database
+- 📊 Pipeline status monitoring
+- ⚡ Automatic switch between Direct Inference and RAG mode
+
+---
+
+## 🏗️ Architecture
+
+```
+                PDF Upload
+                     │
+                     ▼
+             Document Loader
+                     │
+                     ▼
+            Text Chunking
+                     │
+                     ▼
+      nomic-embed-text Embeddings
+                     │
+                     ▼
+               ChromaDB
+                     │
+         ┌───────────┴───────────┐
+         │                       │
+      Retrieved Context      User Query
+         │                       │
+         └───────────┬───────────┘
+                     ▼
+             Ollama (Llama3/Mistral)
+                     │
+                     ▼
+              Generated Response
+```
+
+---
 
 ## 🛠️ Tech Stack
 
-* **Language:** Python 3.9+
-* **Frontend:** Streamlit
-* **LLM Engine:** Ollama
-* **Framework:** LangChain
-* **Models:** Llama 3, Mistral, Gemma, etc.
+| Category | Technology |
+|----------|------------|
+| Language | Python |
+| Frontend | Streamlit |
+| LLM Runtime | Ollama |
+| Models | Llama 3, Mistral |
+| Embedding Model | nomic-embed-text |
+| Vector Database | ChromaDB |
+| Framework | LangChain |
+| PDF Processing | PyPDFLoader |
+| Environment | Python Virtual Environment |
+
+---
 
 ## 📂 Project Structure
 
-```text
+```
 Local-LLM-Chatbot/
 │
-├── app.py               # Main Streamlit application
-├── requirements.txt     # Python dependencies
-└── README.md            # Project documentation
-📋 Prerequisites
-Before running the project, ensure you have the following installed on your system:
+├── app.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+│
+├── chroma_db/           # Generated automatically
+├── vector_store/        # Generated automatically
+└── chat_history.json    # Generated automatically
+```
 
-Python 3.9 or higher
+---
 
-Ollama installed and running
+## 🚀 Installation
 
-Install Ollama & Download Models
-First, download and install Ollama from their official website. Once installed, open your terminal and pull your preferred model:
+### 1. Clone Repository
 
-Bash
-# Verify installation
-ollama --version
-
-# Pull Llama 3 (or swap for 'mistral', 'gemma', etc.)
-ollama pull llama3
-⚙️ Installation & Setup
-1. Clone the Repository
-
-Bash
-git clone [https://github.com/mansiym13-sketch/Local-LLM-Chatbot.git](https://github.com/mansiym13-sketch/Local-LLM-Chatbot.git)
+```bash
+git clone https://github.com/mansiym13-sketch/Local-LLM-Chatbot.git
 cd Local-LLM-Chatbot
-2. Create and Activate a Virtual Environment
+```
 
-Bash
-python -m venv venv
+---
 
-# Activate on Windows:
-venv\Scripts\activate
+### 2. Create Virtual Environment
 
-# Activate on Linux / Mac:
-source venv/bin/activate
-3. Install Dependencies
+```bash
+python -m venv .venv
+```
 
-Bash
+Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+Linux / macOS
+
+```bash
+source .venv/bin/activate
+```
+
+---
+
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-▶️ Running the Application
-1. Start the Ollama Server
-(Make sure Ollama is running in the background. You can usually start it by opening the Ollama application or running this in a separate terminal:)
+```
 
-Bash
+---
+
+### 4. Install Ollama
+
+Download from:
+
+https://ollama.com/download
+
+---
+
+### 5. Pull Required Models
+
+```bash
+ollama pull llama3
+```
+
+```bash
+ollama pull mistral
+```
+
+```bash
+ollama pull nomic-embed-text
+```
+
+---
+
+### 6. Start Ollama
+
+```bash
 ollama serve
-2. Run the Chatbot
+```
 
-Bash
+---
+
+### 7. Launch Application
+
+```bash
 streamlit run app.py
-The application will automatically open in your default browser at http://localhost:8501.
+```
 
-🎯 Usage
-Open the web interface via the localhost URL.
+---
 
-Select your desired local model (e.g., Llama 3).
+## 📖 Usage
 
-Type your query into the chat box.
+1. Launch the application.
+2. Select your preferred LLM.
+3. Upload an enterprise PDF.
+4. Wait for document indexing.
+5. Ask natural language questions.
+6. Receive context-aware responses generated entirely on your machine.
 
-The chatbot will process the prompt locally and generate AI responses in real time.
+---
 
-🔒 Privacy Benefits
-Because this application utilizes local models through Ollama:
+## 🔄 Pipeline Modes
 
-No external server pinging: Zero data is transmitted to third-party companies.
+### General Mode
 
-No API Keys: Completely free to run once set up.
+Used when:
 
-Full Data Control: You have absolute ownership of your conversation history and uploaded documents.
+- No document has been uploaded
+- No relevant context is found
 
-Offline Mode: Works perfectly without an internet connection (after the initial model download).
+Response generated directly from the selected LLM.
+
+---
+
+### RAG Mode
+
+Activated automatically after document indexing.
+
+Workflow:
+
+```
+User Question
+      │
+      ▼
+Similarity Search
+      │
+      ▼
+Retrieve Relevant Chunks
+      │
+      ▼
+Context + Prompt
+      │
+      ▼
+Local LLM
+      │
+      ▼
+Grounded Answer
+```
+
+---
+
+## 🔒 Privacy
+
+- No OpenAI API required
+- No internet needed after model download
+- All inference happens locally
+- Documents never leave your computer
+- Enterprise-ready local deployment
+
+---
+
+
+
+## 🎯 Future Improvements
+
+- Conversation memory
+- Multiple document support
+- Citation highlighting
+- Source page references
+- Hybrid search (BM25 + Vector)
+- Authentication
+- Docker deployment
+- Dark mode
+- REST API support
+
+---
+
+## 👩‍💻 Author
+
+**Mansi Ahirrao**
+
+Final Year Computer Science Engineering (Big Data & Cloud Engineering)
+
+- AWS Certified Cloud Practitioner and AI Practitioner 
+- AI • ML • Cloud • DevOps
+- Python | FastAPI | Docker | Kubernetes | Ollama
+
+GitHub:
+https://github.com/mansiym13-sketch
+
+LinkedIn: https://www.linkedin.com/in/mansi-ahirrao-7652992a8/
+
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub!
